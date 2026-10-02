@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مُتقِن — حوّل أي شيء تريد تعلّمه إلى إتقان</title>
+<style>
+:root{
+  --bg:#0b1020; --bg2:#131a33; --card:#1a2342cc; --card2:#212c55;
+  --txt:#f1f5ff; --mut:#a8b3d6; --acc:#6c7bff; --acc2:#00e5cc; --warn:#ffb020; --ok:#22dd88; --err:#ff5d6c;
+  --r:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Tahoma,Arial,"Noto Kufi Arabic",sans-serif;background:radial-gradient(1200px 600px at 20% -10%,#2a3a8a55,transparent),radial-gradient(900px 500px at 90% 10%,#00e5cc33,transparent),linear-gradient(180deg,var(--bg),#070b18);color:var(--txt);min-height:100vh}
+header{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);background:#0b1020cc;border-bottom:1px solid #ffffff18}
+.wrap{max-width:1150px;margin:0 auto;padding:16px 18px}
+.top{display:flex;align-items:center;gap:14px}
+.logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:grid;place-items:center;font-size:26px;font-weight:900;color:#0b1020}
+h1{font-size:22px;margin:0}
+.sub{color:var(--mut);font-size:13.5px;margin:2px 0 0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-bottom:12px}
+.tab{border:1px solid #ffffff22;background:#ffffff0d;color:var(--txt);padding:9px 14px;border-radius:999px;cursor:pointer;font-size:14px}
+.tab.active{background:linear-gradient(135deg,var(--acc),#9a6bff);border-color:transparent;font-weight:700}
+.tab small{opacity:.8}
+main{padding-bottom:60px}
+.grid{display:grid;gap:16px}
+@media(min-width:900px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}}
+.card{background:linear-gradient(180deg,#1a234add,#141b38ee);border:1px solid #ffffff1a;border-radius:var(--r);padding:18px;box-shadow:0 10px 40px #0006}
+.card h2{margin:0 0 6px;font-size:18px}
+.card p.desc{margin:0 0 12px;color:var(--mut);font-size:13.5px;line-height:1.8}
+input,textarea,select{width:100%;background:#0e1430;border:1px solid #ffffff22;color:var(--txt);border-radius:12px;padding:11px 12px;font-size:14px;font-family:inherit}
+textarea{min-height:110px;resize:vertical;line-height:1.9}
+label{font-size:13px;color:var(--mut);display:block;margin:10px 0 6px}
+.btn{border:0;border-radius:12px;padding:11px 16px;font-weight:800;cursor:pointer;font-size:14px;color:#0b1020;background:linear-gradient(135deg,var(--acc2),#7dffef)}
+.btn2{background:linear-gradient(135deg,var(--acc),#b18cff);color:white}
+.btn3{background:#ffffff14;color:var(--txt);border:1px solid #ffffff2a}
+.btn:active{transform:scale(.98)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:#ffffff12;border:1px solid #ffffff22;border-radius:999px;padding:5px 11px;font-size:12.5px;margin:4px}
+.kpi{display:flex;gap:12px;flex-wrap:wrap}
+.kpi .k{flex:1;min-width:140px;background:#ffffff0c;border:1px solid #ffffff1c;border-radius:14px;padding:12px;text-align:center}
+.k b{font-size:24px;display:block}
+section.page{display:none}
+section.page.active{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.flash{perspective:900px}
+.fcard{background:linear-gradient(135deg,#2a3670,#17204a);border:1px solid #ffffff2a;border-radius:16px;min-height:170px;display:grid;place-items:center;padding:22px;font-size:18px;line-height:2;text-align:center;cursor:pointer;transition:.3s;transform-style:preserve-3d}
+.fcard small{display:block;color:var(--acc2);font-size:12px;margin-top:10px}
+.mindmap{display:flex;flex-direction:column;gap:10px}
+.node{border:1px solid #ffffff22;background:#ffffff0d;border-radius:12px;padding:10px 12px}
+.node.root{background:linear-gradient(135deg,#6c7bff,#00e5cc);color:#0b1020;font-weight:900;border:0}
+.node.lv1{margin-right:18px;border-right:4px solid var(--acc)}
+.node.lv2{margin-right:38px;border-right:4px solid var(--acc2);font-size:13.5px;color:#dde4ff}
+.q{border:1px solid #ffffff1e;border-radius:14px;padding:12px;margin:10px 0;background:#ffffff08}
+.q button{margin:6px 6px 0 0}
+.opt{display:block;width:100%;text-align:right;margin:6px 0;background:#0e1430;border:1px solid #ffffff22;color:var(--txt);border-radius:10px;padding:10px;cursor:pointer}
+.opt.correct{background:#0f3d2a;border-color:var(--ok)}
+.opt.wrong{background:#4a1620;border-color:var(--err)}
+.progress{height:10px;background:#ffffff18;border-radius:999px;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));width:0%}
+canvas#board{background:#fff;border-radius:14px;width:100%;height:280px;touch-action:none;cursor:crosshair}
+.video-grid{display:grid;gap:12px}
+.vid{background:#000;border-radius:14px;overflow:hidden;border:1px solid #ffffff22}
+.vid iframe{width:100%;height:280px;border:0}
+.note{display:flex;gap:8px;margin-top:8px}
+.badge{font-size:11px;background:#00e5cc22;color:var(--acc2);border:1px solid #00e5cc55;padding:2px 8px;border-radius:999px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+td,th{border:1px solid #ffffff1e;padding:8px;text-align:right}
+th{background:#ffffff10}
+.timer{font-size:56px;font-weight:900;text-align:center;letter-spacing:2px}
+footer{color:var(--mut);font-size:12px;text-align:center;padding:20px}
+a{color:var(--acc2)}
+.method-tag{display:inline-block;font-size:11px;padding:3px 9px;border-radius:999px;margin-left:6px;background:#6c7bff22;border:1px solid #6c7bff66}
+details{margin:8px 0;background:#ffffff08;border:1px solid #ffffff1c;border-radius:12px;padding:10px 12px}
+summary{cursor:pointer;font-weight:700}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="top">
+<div class="logo">م</div>
+<div><h1>مُتقِن <span style="font-weight:400;color:var(--acc2)">LearnMaster</span></h1>
+<p class="sub">أعطه ما تريد تعلّمه — نص، ملف، فيديو، رابط — وهو يطبّق عليه أفضل أساليب التعلّم المثبتة علمياً: الاستدعاء النشط، التكرار المتباعد، فاينمان، الترميز المزدوج، التلخيص، الخرائط الذهنية، Pomodoro</p></div>
+</div>
+<div class="tabs" id="tabs">
+<button class="tab active" data-p="p1">① المدخلات 📥</button>
+<button class="tab" data-p="p2">② الفهم والتلخيص 🧠</button>
+<button class="tab" data-p="p3">③ خريطة ذهنية 🗺️</button>
+<button class="tab" data-p="p4">④ بطاقات التكرار ⏳</button>
+<button class="tab" data-p="p5">⑤ اختبار ذاتي ✅</button>
+<button class="tab" data-p="p6">⑥ فاينمان + ترميز مزدوج 🎨</button>
+<button class="tab" data-p="p7">⑦ خطة + Pomodoro 🍅</button>
+</div>
+</div></header>
+
+<main class="wrap">
+<div class="kpi" style="margin:16px 0">
+<div class="k"><b id="kSources">0</b><span>مصادر</span></div>
+<div class="k"><b id="kWords">0</b><span>كلمة</span></div>
+<div class="k"><b id="kCards">0</b><span>بطاقة</span></div>
+<div class="k"><b id="kQuiz">0</b><span>سؤال</span></div>
+<div class="k"><b id="kScore">0%</b><span>إتقان</span></div>
+</div>
+
+<!-- P1 -->
+<section class="page active" id="p1">
+<div class="grid g2">
+<div class="card">
+<h2>🎯 ماذا تريد أن تتعلّم؟</h2>
+<p class="desc">اكتب الموضوع، ثم أضف أي مصادر: الصق نصاً، ارفع ملفات txt/md، أضف فيديوهات يوتيوب، ثم اضغط <b>ولّد حزمة التعلّم</b>.</p>
+<label>موضوع التعلّم</label>
+<input id="topic" placeholder="مثال: أساسيات الذكاء الاصطناعي / فقه الصيام / اللغة الإنجليزية للمبتدئين...">
+<label>الصق نصاً / ملخص محاضرة / مقال</label>
+<textarea id="paste" placeholder="الصق هنا أي نص..."></textarea>
+<div class="row">
+<button class="btn" onclick="addPaste()">➕ أضف النص كمصدر</button>
+<button class="btn btn3" onclick="loadDemo()">✨ جرّب مثالاً جاهزاً</button>
+<button class="btn btn3" onclick="clearAll()">🗑️ مسح الكل</button>
+</div>
+<label>ارفع ملفات (txt, md, srt, vtt, csv)</label>
+<input type="file" id="files" multiple accept=".txt,.md,.srt,.vtt,.csv,.json">
+<label>أضف فيديو يوتيوب (رابط)</label>
+<div class="note"><input id="yt" placeholder="https://www.youtube.com/watch?v=..."><button class="btn btn2" onclick="addVideo()">أضف</button></div>
+<label>مستواك الحالي + هدفك</label>
+<div class="grid" style="grid-template-columns:1fr 1fr;display:grid;gap:8px">
+<select id="level"><option>مبتدئ تماماً</option><option>عندي أساس</option><option>متوسط</option><option>متقدم</option></select>
+<select id="goal"><option>فهم عام سريع (يوم)</option><option>إتقان للاختبار (أسبوع)</option><option>احتراف عميق (شهر)</option></select>
+</div>
+<div class="row"><button class="btn" style="flex:1" onclick="generate()">🚀 ولّد حزمة التعلّم بكل الأساليب</button></div>
+</div>
+<div class="card">
+<h2>📚 مصادرك (<span id="srcCount">0</span>)</h2>
+<p class="desc">كل مصدر سيُستخدم في التلخيص والبطاقات والاختبار والخريطة الذهنية.</p>
+<div id="sources"></div>
+<div id="videos" class="video-grid" style="margin-top:10px"></div>
+</div>
+</div>
+</section>
+
+<!-- P2 -->
+<section class="page" id="p2">
+<div class="grid g2">
+<div class="card"><h2>🧠 التلخيص الذكي <span class="method-tag">Elaboration + Chunking</span></h2>
+<p class="desc">تلخيص استخلاصي تلقائي + مفاهيم مفتاحية + أسئلة تعميقية (لماذا؟ كيف؟).</p>
+<div id="summary"></div>
+<h3 style="margin-top:14px">🔑 المفاهيم المفتاحية</h3><div id="keywords"></div>
+<h3>❓ أسئلة تعميقية</h3><div id="deep"></div>
+</div>
+<div class="card"><h2>📖 النص المدمج</h2><p class="desc">دمج كل مصادرك في نص واحد للمعالجة.</p>
+<div class="progress"><i id="readBar"></i></div>
+<div class="row"><button class="btn btn3" onclick="markRead()">✔️ أنهيت القراءة بتركيز</button></div>
+<textarea id="fulltext" style="min-height:320px;margin-top:10px"></textarea>
+<div class="row"><button class="btn btn2" onclick="regenerateFromEdit()">🔄 أعد التوليد من تعديلي</button></div>
+</div>
+</div>
+</section>
+
+<!-- P3 -->
+<section class="page" id="p3">
+<div class="card"><h2>🗺️ الخريطة الذهنية <span class="method-tag">Dual Coding + Organization</span></h2>
+<p class="desc">تُبنى تلقائياً من المفاهيم: الموضوع في المركز، الفروع أفكار رئيسية، والأوراق تفاصيل.</p>
+<div class="row"><button class="btn btn3" onclick="downloadMindmap()">⬇️ تنزيل الخريطة (txt)</button>
+<button class="btn btn3" onclick="print()">🖨️ طباعة</button></div>
+<div id="mindmap" class="mindmap" style="margin-top:12px"></div>
+</div>
+</section>
+
+<!-- P4 -->
+<section class="page" id="p4">
+<div class="grid g2">
+<div class="card"><h2>⏳ بطاقات الاستدعاء النشط + التكرار المتباعد <span class="method-tag">Active Recall + Spaced</span></h2>
+<p class="desc">اضغط البطاقة لقلبها. قيّم نفسك: عرفت / لم أعرف — النظام يجدول المراجعة (Leitner).</p>
+<div class="progress"><i id="cardBar"></i></div>
+<p id="cardInfo" style="color:var(--mut);font-size:13px"></p>
+<div class="flash"><div class="fcard" id="fcard" onclick="flip()">اضغط "ولّد" أولاً<small>—</small></div></div>
+<div class="row">
+<button class="btn btn3" onclick="prevCard()">◀ السابق</button>
+<button class="btn" onclick="grade(true)">😎 عرفتها</button>
+<button class="btn btn2" onclick="grade(false)">🤔 لم أعرفها</button>
+<button class="btn btn3" onclick="nextCard()">التالي ▶</button>
+</div>
+<div class="row"><button class="btn btn3" onclick="shuffleCards()">🔀 خلط (Interleaving)</button>
+<button class="btn btn3" onclick="exportCards()">⬇️ تصدير البطاقات</button></div>
+</div>
+<div class="card"><h2>📝 أضف بطاقة يدوية</h2>
+<label>السؤال / المصطلح</label><input id="cq" placeholder="مثال: ما هو التكرار المتباعد؟">
+<label>الإجابة</label><textarea id="ca" style="min-height:70px"></textarea>
+<div class="row"><button class="btn" onclick="addManualCard()">➕ إضافة</button></div>
+<h2 style="margin-top:16px">📋 كل البطاقات</h2><div id="cardList"></div>
+</div>
+</div>
+</section>
+
+<!-- P5 -->
+<section class="page" id="p5">
+<div class="card"><h2>✅ الاختبار الذاتي <span class="method-tag">Testing Effect + Interleaving</span></h2>
+<p class="desc">اختبار متنوع تلقائي: اختيار من متعدد + صح/خطأ + أكمل الفراغ. الاختبار أقوى من إعادة القراءة!</p>
+<div class="row">
+<button class="btn" onclick="startQuiz()">▶️ ابدأ اختباراً جديداً (10 أسئلة)</button>
+<button class="btn btn3" onclick="showAllQuiz()">عرض كل الأسئلة</button>
+</div>
+<div id="quiz"></div>
+<div class="card" style="margin-top:12px;background:#0f3d2a55"><b>نتيجتك: <span id="qscore">—</span></b><div class="progress" style="margin-top:8px"><i id="qbar"></i></div></div>
+</div>
+</section>
+
+<!-- P6 -->
+<section class="page" id="p6">
+<div class="grid g2">
+<div class="card"><h2>🗣️ تقنية فاينمان <span class="method-tag">Feynman</span></h2>
+<p class="desc">اشرح الموضوع بكلمات بسيطة كأنك تشرحه لطفل عمره 10 سنوات. النظام يقيس التغطية والبساطة.</p>
+<label>اشرح بأسلوبك البسيط</label>
+<textarea id="feynman" style="min-height:160px" placeholder="اكتب شرحك هنا..."></textarea>
+<div class="row"><button class="btn" onclick="checkFeynman()">🔍 قيّم شرحي</button></div>
+<div id="feynRes"></div>
+<details><summary>💡 مثال شرح جيد</summary><p style="color:var(--mut);line-height:2">التكرار المتباعد مثل سقي النبتة: لا تسقيها كلها مرة واحدة، بل قليلاً كل يوم فتكبر. كذلك عقلك: راجع قليلاً على فترات فتتذكر طويلاً.</p></details>
+</div>
+<div class="card"><h2>🎨 الترميز المزدوج: ارسم + تخيّل <span class="method-tag">Dual Coding</span></h2>
+<p class="desc">اربط كل مفهوم بصورة/رسم/قصة. ارسم هنا الفكرة الأساسية، ثم ارفع صورة ذهنية.</p>
+<canvas id="board" width="800" height="280"></canvas>
+<div class="row">
+<button class="btn btn3" onclick="clearBoard()">🧹 مسح</button>
+<input type="color" id="pen" value="#6c7bff" style="width:60px">
+<button class="btn btn3" onclick="saveDraw()">💾 حفظ الرسمة</button>
+<label style="display:flex;align-items:center;gap:6px">ارفع صورة للمفهوم<input type="file" id="imgup" accept="image/*"></label>
+</div>
+<div id="draws" class="grid" style="grid-template-columns:1fr 1fr 1fr;display:grid;gap:8px;margin-top:8px"></div>
+<label>اربط المفهوم بإيموجي/قصة مضحكة (تقوية الذاكرة)</label>
+<input id="mnemo" placeholder="مثال: 🧠🐘 الفيل لا ينسى = الذاكرة تحتاج تكرار">
+<div class="row"><button class="btn btn2" onclick="addMnemo()">➕ حفظ الرابط</button></div>
+<div id="mnemos"></div>
+<div id="imgprev"></div>
+</div>
+</div>
+</section>
+
+<!-- P7 -->
+<section class="page" id="p7">
+<div class="grid g2">
+<div class="card"><h2>🗓️ خطة الإتقان <span class="method-tag">Spaced + Interleaved Plan</span></h2>
+<div id="plan"></div>
+<div class="row"><button class="btn btn3" onclick="downloadPlan()">⬇️ تنزيل الخطة</button></div>
+<h2 style="margin-top:14px">📊 تقدّمك</h2>
+<div class="progress"><i id="totalBar"></i></div>
+<p id="totalTxt" style="color:var(--mut)"></p>
+</div>
+<div class="card"><h2>🍅 مؤقت Pomodoro (تركيز عميق)</h2>
+<p class="desc">25 دقيقة تركيز + 5 راحة. 4 جولات = مراجعة شاملة.</p>
+<div class="timer" id="timer">25:00</div>
+<div class="row" style="justify-content:center">
+<button class="btn" onclick="pomStart(25)">▶️ تركيز 25</button>
+<button class="btn btn2" onclick="pomStart(5)">☕ راحة 5</button>
+<button class="btn btn3" onclick="pomStop()">⏹️ إيقاف</button>
+</div>
+<p id="pomStat" style="text-align:center;color:var(--mut)"></p>
+<h2>✅ مهام اليوم</h2>
+<div class="note"><input id="todoIn" placeholder="مهمة جديدة..."><button class="btn" onclick="addTodo()">أضف</button></div>
+<div id="todos"></div>
+</div>
+</div>
+</section>
+</main>
+<footer>مُتقِن — يعمل 100% داخل متصفحك، بياناتك محفوظة محلياً (localStorage). صُنع بإتقان 🧠✨</footer>
+
+<script>
+let sources=[], videos=[], cards=[], quiz=[], cardIdx=0, flipped=false, readDone=false, quizAnswered=0, quizCorrect=0;
+let todos=JSON.parse(localStorage.getItem('mutqin_todos')||'[]');
+let mnemosArr=JSON.parse(localStorage.getItem('mutqin_mnemo')||'[]');
+try{cards=JSON.parse(localStorage.getItem('mutqin_cards')||'[]')}catch(e){cards=[]}
+
+// tabs
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(b.dataset.p).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})});
+function go(p){document.querySelector(`[data-p="${p}"]`).click()}
+
+// ---- inputs
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function addPaste(){const t=document.getElementById('paste').value.trim();if(t.length<20){alert('الصق نصاً أطول (20 حرفاً على الأقل)');return}sources.push({title:'نص ملصق '+(sources.length+1),content:t});document.getElementById('paste').value='';renderSources()}
+function clearAll(){if(!confirm('مسح كل شيء؟'))return;sources=[];videos=[];cards=[];quiz=[];localStorage.removeItem('mutqin_cards');renderAll()}
+function loadDemo(){document.getElementById('topic').value='كيف يتعلّم الدماغ؟ (التكرار المتباعد والاستدعاء النشط)';sources.push({title:'مثال: علم التعلّم',content:`التعلّم الفعّال يعتمد على الاستدعاء النشط وليس إعادة القراءة. عندما تحاول تذكّر المعلومة من ذاكرتك فإنك تقوّي المسار العصبي. التكرار المتباعد يعني مراجعة المعلومة على فترات متزايدة: بعد يوم ثم ثلاثة أيام ثم أسبوع ثم شهر. النوم مهم لتثبيت الذاكرة لأن الدماغ يعيد تشغيل ما تعلمته أثناء النوم العميق. تقنية فاينمان تقول اشرح الفكرة ببساطة فإن تعثرت فهذه فجوة في فهمك. الترميز المزدوج يجمع الكلمات مع الصور فيتضاعف التذكر. التقطيع يعني تقسيم المادة الكبيرة إلى أجزاء صغيرة. التشابك يعني خلط المواضيع في الجلسة الواحدة بدل كتلة واحدة. الممارسة الموزعة أفضل من الحشو الليلة السابقة للاختبار. النوم والرياضة والتركيز العميق بتقنية بومودورو خمس وعشرون دقيقة ترفع التحصيل. اسأل نفسك دائما لماذا وكيف لتربط المعلومة بخبرتك السابقة.`});renderSources();generate()}
+document.getElementById('files').addEventListener('change',e=>{[...e.target.files].forEach(f=>{const r=new FileReader();r.onload=()=>{sources.push({title:f.name,content:String(r.result).slice(0,30000)});renderSources()};r.readAsText(f,'utf-8')})});
+function ytId(u){const m=String(u).match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w-]{6,})/);return m?m[1]:null}
+function addVideo(){const u=document.getElementById('yt').value.trim();const id=ytId(u);if(!id){alert('رابط يوتيوب غير صالح');return}videos.push({url:u,id,title:'فيديو '+(videos.length+1)});document.getElementById('yt').value='';renderSources()}
+function renderSources(){document.getElementById('srcCount').textContent=sources.length;const d=document.getElementById('sources');d.innerHTML=sources.map((s,i)=>`<div class="node lv1"><b>${esc(s.title)}</b> <span class="badge">${s.content.split(/\s+/).length} كلمة</span><br><span style="color:var(--mut);font-size:12.5px">${esc(s.content.slice(0,140))}...</span><br><button class="btn3 btn" style="margin-top:6px;padding:5px 10px" onclick="sources.splice(${i},1);renderSources()">حذف</button></div>`).join('')||'<p style="color:var(--mut)">لا مصادر بعد.</p>';
+document.getElementById('videos').innerHTML=videos.map((v,i)=>`<div class="vid"><iframe src="https://www.youtube.com/embed/${v.id}" allowfullscreen></iframe><div style="padding:8px"><input placeholder="✍️ ملاحظة على الفيديو... (تُحفظ كمصدر)" onkeydown="if(event.key==='Enter'){sources.push({title:'ملاحظة فيديو',content:this.value});renderSources();this.value='';}"><button class="btn3 btn" style="margin-top:6px" onclick="videos.splice(${i},1);renderSources()">حذف الفيديو</button></div></div>`).join('');
+updateKpi()}
+
+// ---- NLP core (offline)
+const STOP=new Set('من في على إلى أن إن كان كانت الذي التي ما ماذا هذا هذه ذلك ثم أو و او مع لقد قد لا لم لن عن عند كل كما بين بعد قبل حتى إذا لو لكن بل هل كيف لماذا أين متى كم أي the a an of to in on and or is are was were be with for as by it its this that these those you we they he she at from which will would can should have has had not but what when how why where'.split(' '));
+function sents(t){return (t||'').replace(/\n+/g,' ').split(/(?<=[.!؟?。])\s+|(?<=\n)\s*/).map(s=>s.trim()).filter(s=>s.length>10)}
+function keywords(t,n=14){const f={};t.split(/\s+/).forEach(w=>{w=w.replace(/[«»"“”'(),.:؛!?؟\[\]0-9]/g,'').trim();if(w.length>2&&!STOP.has(w))f[w]=(f[w]||0)+1});return Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,n).map(x=>x[0])}
+function summarize(t,k=6){const ss=sents(t);if(!ss.length)return[];const kw=keywords(t,30);const scored=ss.map(s=>({s,sc:kw.reduce((a,w)=>a+(s.includes(w)?1:0),0)/Math.sqrt(s.split(/\s+/).length)}));return scored.sort((a,b)=>b.sc-s.sc).slice(0,k).sort((a,b)=>ss.indexOf(a.s)-ss.indexOf(b.s)).map(x=>x.s)}
+function fullText(){const tp=document.getElementById('topic').value.trim();const ft=document.getElementById('fulltext').value.trim();if(ft.length>50)return tp+'.\n'+ft;return tp+'.\n'+sources.map(s=>s.content).join('\n')}
+
+function generate(){const tp=document.getElementById('topic').value.trim();if(!tp){alert('اكتب موضوع التعلّم أولاً');go('p1');return}if(!sources.length&&!videos.length){if(!confirm('لا توجد مصادر. أولّد من اسم الموضوع فقط؟'))return;sources.push({title:'الموضوع',content:tp+'. '+tp})}
+const text=tp+'.\n'+sources.map(s=>s.content).join('\n');
+document.getElementById('fulltext').value=text;
+// summary
+const sum=summarize(text,6);const kw=keywords(text,14);
+document.getElementById('summary').innerHTML=sum.map((s,i)=>`<div class="node lv1">📌 ${esc(s)}</div>`).join('')||'—';
+document.getElementById('keywords').innerHTML=kw.map(k=>`<span class="pill">🔑 ${esc(k)}</span>`).join('');
+const deep=[`لماذا ${kw[0]||'هذه الفكرة'} مهمة في حياتك العملية؟`,`كيف تشرح ${kw[1]||'الفكرة الثانية'} لشخص آخر؟`,`ما الفرق بين ${kw[0]||'أ'} و ${kw[1]||'ب'}؟`,`متى تفشل هذه الطريقة؟ وما البديل؟`,`كيف تطبّق ما تعلمته خلال 24 ساعة؟`];
+document.getElementById('deep').innerHTML=deep.map(q=>`<div class="q">❓ ${esc(q)}<br><input placeholder="اكتب إجابتك..." style="margin-top:6px" onkeydown="if(event.key==='Enter'){this.style.borderColor='var(--ok)';updateMastery()}"></div>`).join('');
+buildMindmap(tp,sum,kw);buildCards(text,kw);buildQuiz(text,kw);buildPlan();renderAll();go('p2');updateMastery()}
+function regenerateFromEdit(){const tp=document.getElementById('topic').value.trim()||'موضوعي';const text=fullText();const sum=summarize(text,6);const kw=keywords(text,14);document.getElementById('summary').innerHTML=sum.map(s=>`<div class="node lv1">📌 ${esc(s)}</div>`).join('');document.getElementById('keywords').innerHTML=kw.map(k=>`<span class="pill">🔑 ${esc(k)}</span>`).join('');buildMindmap(tp,sum,kw);buildCards(text,kw);buildQuiz(text,kw);buildPlan();renderAll()}
+function buildMindmap(tp,sum,kw){const m=document.getElementById('mindmap');let h=`<div class="node root">🎯 ${esc(tp)}</div>`;const branches=sum.slice(0,4);branches.forEach((b,i)=>{h+=`<div class="node lv1"><b>🌿 فرع ${i+1}:</b> ${esc(b.slice(0,110))}</div>`;const rel=kw.slice(i*2,i*2+2);rel.forEach(k=>{h+=`<div class="node lv2">🍃 ${esc(k)} — اربطها بمثال من حياتك</div>`})});h+=`<div class="node lv1"><b>🔁 مراجعة:</b> راجع الفروع 1-2 غداً، و3-4 بعد 3 أيام (تكرار متباعد)</div>`;m.innerHTML=h}
+function downloadMindmap(){const t=document.getElementById('mindmap').innerText;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));a.download='mindmap.txt';a.click()}
+
+// ---- cards
+function buildCards(text,kw){const ss=sents(text);const fresh=[];ss.slice(0,40).forEach(s=>{const hit=kw.find(k=>s.includes(k)&&k.length>2);if(hit&&s.length<220){const q=s.replace(hit,' (...) ');fresh.push({q:'أكمل: '+q,a:s,hint:hit,box:1,next:Date.now()})}});
+kw.slice(0,8).forEach(k=>{fresh.push({q:'ما المقصود بـ: '+k+'؟',a:'اشرح '+k+' بكلماتك. (راجع التلخيص)',hint:k,box:1,next:Date.now()})});
+const seen=new Set(cards.map(c=>c.q));fresh.forEach(c=>{if(!seen.has(c.q))cards.push(c)});
+saveCards();cardIdx=0;flipped=false;renderCards()}
+function saveCards(){localStorage.setItem('mutqin_cards',JSON.stringify(cards))}
+function renderCards(){document.getElementById('cardList').innerHTML=cards.map((c,i)=>`<div class="pill" style="${i===cardIdx?'border-color:var(--acc2)':''}">#${i+1} 📦${c.box} ${esc(c.q.slice(0,40))}...</div>`).join('');showCard();updateKpi();updateMastery()}
+function showCard(){const el=document.getElementById('fcard');if(!cards.length){el.innerHTML='لا بطاقات بعد';return}const c=cards[cardIdx];el.innerHTML=(flipped?('✅ '+esc(c.a)):( '❓ '+esc(c.q))+`<small>بطاقة ${cardIdx+1}/${cards.length} • صندوق ${c.box} • اضغط للقلب • تلميح: ${esc(c.hint||'')}</small>`;document.getElementById('cardInfo').textContent=`التكرار المتباعد: صندوق 1 = يومي، 2 = بعد 3 أيام، 3 = أسبوع، 4 = متقَن ✔️`;const done=cards.filter(c=>c.box>=4).length;document.getElementById('cardBar').style.width=(cards.length?done/cards.length*100:0)+'%'}
+function flip(){flipped=!flipped;showCard()}
+function nextCard(){if(!cards.length)return;cardIdx=(cardIdx+1)%cards.length;flipped=false;showCard()}
+function prevCard(){if(!cards.length)return;cardIdx=(cardIdx-1+cards.length)%cards.length;flipped=false;showCard()}
+function shuffleCards(){cards.sort(()=>Math.random()-.5);cardIdx=0;flipped=false;showCard()}
+function grade(ok){if(!cards.length)return;const c=cards[cardIdx];c.box=ok?Math.min(4,c.box+1):1;saveCards();nextCard();updateMastery()}
+function addManualCard(){const q=document.getElementById('cq').value.trim(),a=document.getElementById('ca').value.trim();if(!q||!a){alert('أكمل السؤال والإجابة');return}cards.push({q,a,hint:'يدوية',box:1,next:Date.now()});saveCards();document.getElementById('cq').value='';document.getElementById('ca').value='';renderCards()}
+function exportCards(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([cards.map(c=>`Q: ${c.q}\nA: ${c.a}`).join('\n\n')],{type:'text/plain'}));a.download='flashcards.txt';a.click()}
+
+// ---- quiz
+function buildQuiz(text,kw){quiz=[];const ss=sents(text).filter(s=>s.length<220);const pool=ss.slice(0,20);
+pool.slice(0,5).forEach(s=>{const hit=kw.find(k=>s.includes(k));if(!hit)return;const others=kw.filter(k=>k!==hit).slice(0,3);if(others.length<3)return;quiz.push({t:'اختر التكملة الصحيحة:',stem:s.replace(hit,'___'),opts:shuffle([hit,...others]),ans:hit})});
+for(let i=0;i<3&&i<ss.length;i++){quiz.push({t:'صح أم خطأ:',stem:ss[i],opts:['صح','خطأ'],ans:'صح'})}
+kw.slice(0,3).forEach(k=>{quiz.push({t:'أكمل الفراغ:',stem:`مفهوم (...) أساسي في هذا الموضوع.`,opts:null,ans:k})});
+updateKpi()}
+function shuffle(a){return a.sort(()=>Math.random()-.5)}
+function startQuiz(){quizAnswered=0;quizCorrect=0;showAllQuiz()}
+function showAllQuiz(){const d=document.getElementById('quiz');if(!quiz.length){d.innerHTML='<p>ولّد الحزمة أولاً.</p>';return}
+d.innerHTML=quiz.slice(0,10).map((q,i)=>{if(q.opts){return `<div class="q" id="qq${i}"><b>${i+1}. ${esc(q.t)}</b><br>${esc(q.stem)}<br>${q.opts.map(o=>`<button class="opt" onclick="answer(${i},'${esc(o).replace(/'/g,"\\'")}',this)">${esc(o)}</button>`).join('')}</div>`}else{return `<div class="q"><b>${i+1}. ${esc(q.t)}</b> ${esc(q.stem)}<br><div class="note"><input id="fill${i}" placeholder="اكتب الإجابة..."><button class="btn btn2" onclick="answerFill(${i})">تحقق</button></div><div id="ff${i}"></div></div>`}}).join('')+`<div class="row"><button class="btn btn3" onclick="document.getElementById('qscore').textContent='أعد المحاولة للتحسين 🔁'">🔁 إعادة</button></div>`}
+function answer(i,val,btn){const q=quiz[i];const box=document.getElementById('qq'+i);const ok=val===q.ans;[...box.querySelectorAll('.opt')].forEach(b=>{b.disabled=true;if(b.textContent===q.ans)b.classList.add('correct');else if(b===btn&&!ok)b.classList.add('wrong')});quizAnswered++;if(ok)quizCorrect++;score()}
+function answerFill(i){const v=document.getElementById('fill'+i).value.trim();const ans=quiz[i].ans;const ok=v.includes(ans)||ans.includes(v);document.getElementById('ff'+i).innerHTML=ok?`✅ صحيح! الإجابة: ${esc(ans)}`:`💡 الإجابة: <b>${esc(ans)}</b> — إجابتك تقترب، راجع البطاقات.`;quizAnswered++;if(ok)quizCorrect++;score()}
+function score(){document.getElementById('qscore').textContent=quizCorrect+' / '+quizAnswered;document.getElementById('qbar').style.width=(quizAnswered?quizCorrect/quizAnswered*100:0)+'%';updateMastery()}
+
+// ---- feynman
+function checkFeynman(){const t=document.getElementById('feynman').value.trim();if(t.length<30){alert('اكتب شرحاً أطول قليلاً');return}const kw=keywords(fullText(),14);const cover=kw.filter(k=>t.includes(k)).length;const words=t.split(/\s+/).length;const avgSent=t.length/Math.max(1,sents(t).length);let msg=`تغطيتك للمفاهيم: <b>${cover}/${kw.length}</b> — `;msg+=cover>=kw.length/2?'ممتاز! 🎉':'ناقص، راجع المفاهيم المظللة وأعد الشرح 🔁';msg+=`<br>البساطة: متوسط طول الجملة ${Math.round(avgSent)} حرف — `+(avgSent<120?'بسيط وواضح ✅':'حاول تقصير الجمل ✂️');msg+=`<br>المفاهيم الغائبة: `+kw.filter(k=>!t.includes(k)).slice(0,6).map(k=>`<span class="pill">⚠️ ${esc(k)}</span>`).join('');document.getElementById('feynRes').innerHTML=`<div class="q">${msg}</div>`;updateMastery()}
+
+// ---- draw + mnemo + img
+const cv=document.getElementById('board');const ctx=cv.getContext('2d');let drawing=false;ctx.lineWidth=3;ctx.strokeStyle='#6c7bff';ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height);ctx.strokeStyle=document.getElementById('pen').value;
+document.getElementById('pen').oninput=e=>ctx.strokeStyle=e.target.value;
+function pos(e){const r=cv.getBoundingClientRect();const cx=(e.touches?e.touches[0].clientX:e.clientX);const cy=(e.touches?e.touches[0].clientY:e.clientY);return[(cx-r.left)*cv.width/r.width,(cy-r.top)*cv.height/r.height]}
+cv.onmousedown=e=>{drawing=true;const[x,y]=pos(e);ctx.beginPath();ctx.moveTo(x,y)};cv.onmousemove=e=>{if(!drawing)return;const[x,y]=pos(e);ctx.lineTo(x,y);ctx.stroke()};window.onmouseup=()=>drawing=false;cv.ontouchstart=e=>{drawing=true;const[x,y]=pos(e);ctx.beginPath();ctx.moveTo(x,y)};cv.ontouchmove=e=>{e.preventDefault();if(!drawing)return;const[x,y]=pos(e);ctx.lineTo(x,y);ctx.stroke()};cv.ontouchend=()=>drawing=false;
+function clearBoard(){ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height)}
+function saveDraw(){const u=cv.toDataURL();const d=document.createElement('div');d.innerHTML=`<img src="${u}" style="width:100%;border-radius:10px;border:1px solid #ffffff33">`;document.getElementById('draws').appendChild(d)}
+document.getElementById('imgup').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{document.getElementById('imgprev').innerHTML+=`<img src="${r.result}" style="width:100%;border-radius:12px;margin-top:8px;border:1px solid #ffffff33">`;sources.push({title:'صورة: '+f.name,content:'مفهوم بصري من صورة '+f.name+'. '+document.getElementById('topic').value});renderSources()};r.readAsDataURL(f)});
+function addMnemo(){const v=document.getElementById('mnemo').value.trim();if(!v)return;mnemosArr.push(v);localStorage.setItem('mutqin_mnemo',JSON.stringify(mnemosArr));document.getElementById('mnemo').value='';renderMnemo()}
+function renderMnemo(){document.getElementById('mnemos').innerHTML=mnemosArr.map((m,i)=>`<div class="pill">🧩 ${esc(m)} <a href="#" onclick="mnemosArr.splice(${i},1);localStorage.setItem('mutqin_mnemo',JSON.stringify(mnemosArr));renderMnemo();return false" style="color:var(--err)">✕</a></div>`).join('')}
+
+// ---- plan + pomodoro + todos
+function buildPlan(){const lvl=document.getElementById('level').value,g=document.getElementById('goal').value;const days=g.includes('يوم')?1:g.includes('أسبوع')?7:30;let h=`<table><tr><th>اليوم</th><th>المهمة (تشابك + تباعد)</th><th>الأسلوب</th></tr>`;const tasks=['قراءة + تلخيص بأسلوبك','خريطة ذهنية + شرح فاينمان','بطاقات (صندوق 1) + اختبار قصير','خلط المواضيع + رسم مفهوم','مراجعة متباعدة + اختبار شامل','تطبيق عملي خلال 24 ساعة','مراجعة نهائية + شرح لشخص آخر'];for(let d=1;d<=Math.min(days,7);d++){h+=`<tr><td>يوم ${d}</td><td>${tasks[(d-1)%tasks.length]}</td><td>${['استدعاء نشط','ترميز مزدوج','تكرار متباعد','تشابك','اختبار','تطبيق','فاينمان'][ (d-1)%7]}</td></tr>`}h+='</table>';if(days===30)h+='<p style="color:var(--mut)">كرر الأسبوع مع تعميق + مشروع تطبيقي كل أسبوع.</p>';document.getElementById('plan').innerHTML=h}
+function downloadPlan(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([document.getElementById('plan').innerText],{type:'text/plain'}));a.download='study-plan.txt';a.click()}
+let pomInt=null,pomSec=0;
+function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function pomStart(m){pomStop();pomSec=m*60;document.getElementById('timer').textContent=fmt(pomSec);document.getElementById('pomStat').textContent=m===25?'🧠 ركّز! ممنوع الجوال.' : '☕ استرح، تحرك، اشرب ماء.';pomInt=setInterval(()=>{pomSec--;document.getElementById('timer').textContent=fmt(Math.max(0,pomSec));if(pomSec<=0){clearInterval(pomInt);alert(m===25?'أحسنت! خذ راحة 5 دقائق ☕':'انتهت الراحة، جولة تركيز جديدة؟ 🚀');updateMastery()}},1000)}
+function pomStop(){if(pomInt)clearInterval(pomInt)}
+function renderTodos(){document.getElementById('todos').innerHTML=todos.map((t,i)=>`<div class="q"><input type="checkbox" ${t.done?'checked':''} onchange="todos[${i}].done=this.checked;localStorage.setItem('mutqin_todos',JSON.stringify(todos));updateMastery()" style="width:auto"> ${t.done?'<s>'+esc(t.txt)+'</s>':esc(t.txt)} <a href="#" onclick="todos.splice(${i},1);localStorage.setItem('mutqin_todos',JSON.stringify(todos));renderTodos();return false">✕</a></div>`).join('')}
+function addTodo(){const v=document.getElementById('todoIn').value.trim();if(!v)return;todos.push({txt:v,done:false});localStorage.setItem('mutqin_todos',JSON.stringify(todos));document.getElementById('todoIn').value='';renderTodos();updateMastery()}
+function markRead(){readDone=true;document.getElementById('readBar').style.width='100%';updateMastery()}
+
+// ---- mastery
+function updateKpi(){document.getElementById('kSources').textContent=sources.length+videos.length;const all=fullText();document.getElementById('kWords').textContent=all.split(/\s+/).filter(Boolean).length;document.getElementById('kCards').textContent=cards.length;document.getElementById('kQuiz').textContent=quiz.length;updateMastery()}
+function updateMastery(){let s=0;if(sources.length)s+=15;if(document.getElementById('summary').innerText.length>50)s+=15;if(cards.filter(c=>c.box>=2).length)s+=20;if(quizCorrect)s+=20;if(document.getElementById('feynman').value.length>50)s+=10;if(readDone)s+=10;if(todos.filter(t=>t.done).length)s+=10;s=Math.min(100,s);document.getElementById('kScore').textContent=s+'%';document.getElementById('totalBar').style.width=s+'%';document.getElementById('totalTxt').textContent=s<30?'البداية قوية، واصل! 🌱':s<70?'تقدّم رائع، الاستمرارية تصنع الإتقان 🔥':'قريب من الإتقان! اشرح لشخص آخر لتثبيت 90% 🏆'}
+function renderAll(){renderSources();renderCards();renderTodos();renderMnemo();updateKpi()}
+renderAll();
+</script>
+</body>
+</html>
